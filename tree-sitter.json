@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "abs",
+      "camelcase": "Abs",
+      "title": "Abs",
+      "scope": "source.abs",
+      "file-types": [
+        "abs"
+      ],
+      "injection-regex": "^abs$",
+      "class-name": "TreeSitterAbs"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "license": "MIT",
+    "description": "Parser for Abs (abs-lang.org)",
+    "authors": [
+      {
+        "name": "Jacek Karaskiewicz",
+        "email": "jacek.karaskiewicz@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/abs-lang/abs"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
