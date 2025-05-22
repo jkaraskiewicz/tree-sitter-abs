@@ -88,11 +88,8 @@
               "value": "'"
             },
             {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "(?:[^']|\\\\')*"
-              }
+              "type": "SYMBOL",
+              "name": "single_quoted_string"
             },
             {
               "type": "STRING",
@@ -108,11 +105,8 @@
               "value": "\""
             },
             {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "(?:[^\"]|\\\\\")*"
-              }
+              "type": "SYMBOL",
+              "name": "double_quoted_string"
             },
             {
               "type": "STRING",
@@ -121,6 +115,20 @@
           ]
         }
       ]
+    },
+    "single_quoted_string": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "(?:[^']|\\\\')*"
+      }
+    },
+    "double_quoted_string": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "(?:[^\"]|\\\\\")*"
+      }
     },
     "number": {
       "type": "TOKEN",
@@ -1002,7 +1010,67 @@
         },
         {
           "type": "SYMBOL",
+          "name": "exec_system_command_call_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "dollared_system_command_call_expression"
+        }
+      ]
+    },
+    "exec_system_command_call_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "exec"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "'"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "single_quoted_string"
+                },
+                {
+                  "type": "STRING",
+                  "value": "'"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "\""
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "double_quoted_string"
+                },
+                {
+                  "type": "STRING",
+                  "value": "\""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },

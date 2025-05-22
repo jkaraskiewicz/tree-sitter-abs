@@ -43,15 +43,18 @@ module.exports = grammar({
     string: $ => choice(
       seq(
         '\'',
-        token.immediate(/(?:[^']|\\')*/),
+        $.single_quoted_string,
         '\'',
       ),
       seq(
         '"',
-        token.immediate(/(?:[^"]|\\")*/),
+        $.double_quoted_string,
         '"',
       ),
     ),
+
+    single_quoted_string: $ => token.immediate(/(?:[^']|\\')*/),
+    double_quoted_string: $ => token.immediate(/(?:[^"]|\\")*/),
 
     number: $ => {
       const digit = /\d/;
@@ -190,7 +193,26 @@ module.exports = grammar({
 
     system_command_call_expression: $ => choice(
       $.quoted_system_command_call_expression,
+      $.exec_system_command_call_expression,
       $.dollared_system_command_call_expression,
+    ),
+
+    exec_system_command_call_expression: $ => seq(
+      'exec',
+      '(',
+      choice(
+        seq(
+          '\'',
+          $.single_quoted_string,
+          '\'',
+        ),
+        seq(
+          '"',
+          $.double_quoted_string,
+          '"',
+        ),
+      ),
+      ')',
     ),
 
     quoted_system_command_call_expression: $ => seq(
@@ -234,10 +256,10 @@ module.exports = grammar({
       ),
     ),
 
-    anonymous_function: $ => seq( // Renamed from _anonymous_function_declaration
+    anonymous_function: $ => seq(
       'f',
       '(',
-      optional($._parameters_list), // Optional for functions with no params
+      optional($._parameters_list),
       ')',
       $.block,
     ),
