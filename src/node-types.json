@@ -417,11 +417,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "double_quoted_string",
+          "named": true
+        },
+        {
+          "type": "exec_builtin_command",
           "named": true
         },
         {
@@ -1466,8 +1470,8 @@
     "named": false
   },
   {
-    "type": "exec",
-    "named": false
+    "type": "exec_builtin_command",
+    "named": true
   },
   {
     "type": "f",

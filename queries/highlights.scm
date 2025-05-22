@@ -82,6 +82,8 @@
 
 "f" @keyword.function
 
+(exec_builtin_command) @function.builtin
+
 (function_call_expression
   (identifier) @function.builtin
   (#any-of? @function.builtin

@@ -1018,12 +1018,16 @@
         }
       ]
     },
+    "exec_builtin_command": {
+      "type": "STRING",
+      "value": "exec"
+    },
     "exec_system_command_call_expression": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "exec"
+          "type": "SYMBOL",
+          "name": "exec_builtin_command"
         },
         {
           "type": "STRING",

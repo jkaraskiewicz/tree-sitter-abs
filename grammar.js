@@ -197,8 +197,10 @@ module.exports = grammar({
       $.dollared_system_command_call_expression,
     ),
 
+    exec_builtin_command: $ => 'exec',
+
     exec_system_command_call_expression: $ => seq(
-      'exec',
+      $.exec_builtin_command,
       '(',
       choice(
         seq(
