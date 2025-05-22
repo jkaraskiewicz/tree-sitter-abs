@@ -4,6 +4,7 @@
 (boolean) @boolean
 (nil) @constant.builtin
 
+; Punctuation
 [
   ";"
   ":"
@@ -19,8 +20,8 @@
   "}"
 ] @punctuation.bracket
 
+; Main building blocks
 (line_comment) @comment
-
 (identifier) @variable
 (annotation) @attribute
 (function_call_expression (identifier) @function.call)
@@ -82,6 +83,7 @@
 
 "f" @keyword.function
 
+; Builtins
 (exec_builtin_command) @function.builtin
 
 (function_call_expression
