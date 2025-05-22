@@ -65,11 +65,11 @@ enum ts_symbol_identifiers {
   anon_sym_PIPE_PIPE = 43,
   anon_sym_DOT_DOT = 44,
   anon_sym_BQUOTE = 45,
-  aux_sym_quoted_system_command_call_expression_token1 = 46,
-  anon_sym_DOLLAR = 47,
-  anon_sym_LPAREN2 = 48,
-  aux_sym_dollared_system_command_call_expression_token1 = 49,
-  anon_sym_RPAREN2 = 50,
+  anon_sym_DOLLAR = 46,
+  anon_sym_LPAREN2 = 47,
+  aux_sym_dollared_system_command_call_expression_token1 = 48,
+  anon_sym_RPAREN2 = 49,
+  sym_system_command_call_content = 50,
   anon_sym_f = 51,
   anon_sym_AT = 52,
   anon_sym_EQ = 53,
@@ -186,11 +186,11 @@ static const char * const ts_symbol_names[] = {
   [anon_sym_PIPE_PIPE] = "||",
   [anon_sym_DOT_DOT] = "..",
   [anon_sym_BQUOTE] = "`",
-  [aux_sym_quoted_system_command_call_expression_token1] = "quoted_system_command_call_expression_token1",
   [anon_sym_DOLLAR] = "$",
   [anon_sym_LPAREN2] = "(",
   [aux_sym_dollared_system_command_call_expression_token1] = "dollared_system_command_call_expression_token1",
   [anon_sym_RPAREN2] = ")",
+  [sym_system_command_call_content] = "system_command_call_content",
   [anon_sym_f] = "f",
   [anon_sym_AT] = "@",
   [anon_sym_EQ] = "=",
@@ -307,11 +307,11 @@ static const TSSymbol ts_symbol_map[] = {
   [anon_sym_PIPE_PIPE] = anon_sym_PIPE_PIPE,
   [anon_sym_DOT_DOT] = anon_sym_DOT_DOT,
   [anon_sym_BQUOTE] = anon_sym_BQUOTE,
-  [aux_sym_quoted_system_command_call_expression_token1] = aux_sym_quoted_system_command_call_expression_token1,
   [anon_sym_DOLLAR] = anon_sym_DOLLAR,
   [anon_sym_LPAREN2] = anon_sym_LPAREN,
   [aux_sym_dollared_system_command_call_expression_token1] = aux_sym_dollared_system_command_call_expression_token1,
   [anon_sym_RPAREN2] = anon_sym_RPAREN,
+  [sym_system_command_call_content] = sym_system_command_call_content,
   [anon_sym_f] = anon_sym_f,
   [anon_sym_AT] = anon_sym_AT,
   [anon_sym_EQ] = anon_sym_EQ,
@@ -566,10 +566,6 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = false,
   },
-  [aux_sym_quoted_system_command_call_expression_token1] = {
-    .visible = false,
-    .named = false,
-  },
   [anon_sym_DOLLAR] = {
     .visible = true,
     .named = false,
@@ -585,6 +581,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   [anon_sym_RPAREN2] = {
     .visible = true,
     .named = false,
+  },
+  [sym_system_command_call_content] = {
+    .visible = true,
+    .named = true,
   },
   [anon_sym_f] = {
     .visible = true,
@@ -1226,12 +1226,12 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         '!', 42,
         '"', 21,
         '#', 98,
-        '$', 71,
+        '$', 67,
         '%', 47,
         '&', 52,
         '\'', 14,
-        '(', 72,
-        ')', 76,
+        '(', 68,
+        ')', 72,
         '*', 45,
         '+', 48,
         ',', 36,
@@ -1262,19 +1262,19 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 1:
       if (lookahead == '#') ADVANCE(98);
-      if (lookahead == '(') ADVANCE(72);
+      if (lookahead == '(') ADVANCE(68);
       if (('\t' <= lookahead && lookahead <= '\r') ||
           lookahead == ' ') ADVANCE(97);
       END_STATE();
     case 2:
-      if (lookahead == '#') ADVANCE(73);
+      if (lookahead == '#') ADVANCE(69);
       if (('\t' <= lookahead && lookahead <= '\r') ||
-          lookahead == ' ') ADVANCE(74);
+          lookahead == ' ') ADVANCE(70);
       if (lookahead != 0 &&
           lookahead != '#' &&
           lookahead != '$' &&
           lookahead != '(' &&
-          lookahead != ')') ADVANCE(75);
+          lookahead != ')') ADVANCE(71);
       END_STATE();
     case 3:
       if (lookahead == '.') ADVANCE(40);
@@ -1302,7 +1302,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         '!', 42,
         '"', 21,
         '#', 98,
-        '$', 71,
+        '$', 67,
         '%', 47,
         '&', 52,
         '\'', 14,
@@ -1341,10 +1341,10 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         '!', 41,
         '"', 21,
         '#', 98,
-        '$', 71,
+        '$', 67,
         '\'', 14,
         '(', 37,
-        ')', 76,
+        ')', 72,
         ';', 89,
         '@', 77,
         '[', 31,
@@ -1365,7 +1365,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         '!', 41,
         '"', 21,
         '#', 98,
-        '$', 71,
+        '$', 67,
         '\'', 14,
         '(', 37,
         ')', 38,
@@ -1391,7 +1391,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         '!', 41,
         '"', 21,
         '#', 98,
-        '$', 71,
+        '$', 67,
         '\'', 14,
         '(', 37,
         ';', 89,
@@ -1644,63 +1644,63 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(anon_sym_BQUOTE);
       END_STATE();
     case 67:
-      ACCEPT_TOKEN(aux_sym_quoted_system_command_call_expression_token1);
-      if (lookahead == '\n') ADVANCE(70);
-      if (lookahead == '`') ADVANCE(98);
-      if (lookahead != 0) ADVANCE(67);
-      END_STATE();
-    case 68:
-      ACCEPT_TOKEN(aux_sym_quoted_system_command_call_expression_token1);
-      if (lookahead == '#') ADVANCE(67);
-      if (('\t' <= lookahead && lookahead <= '\r') ||
-          lookahead == ' ') ADVANCE(69);
-      if (lookahead != 0 &&
-          lookahead != '`') ADVANCE(70);
-      END_STATE();
-    case 69:
-      ACCEPT_TOKEN(aux_sym_quoted_system_command_call_expression_token1);
-      if (('\t' <= lookahead && lookahead <= '\r') ||
-          lookahead == ' ') ADVANCE(69);
-      if (lookahead != 0 &&
-          lookahead != '`') ADVANCE(70);
-      END_STATE();
-    case 70:
-      ACCEPT_TOKEN(aux_sym_quoted_system_command_call_expression_token1);
-      if (lookahead != 0 &&
-          lookahead != '`') ADVANCE(70);
-      END_STATE();
-    case 71:
       ACCEPT_TOKEN(anon_sym_DOLLAR);
       END_STATE();
-    case 72:
+    case 68:
       ACCEPT_TOKEN(anon_sym_LPAREN2);
       END_STATE();
-    case 73:
+    case 69:
       ACCEPT_TOKEN(aux_sym_dollared_system_command_call_expression_token1);
-      if (lookahead == '\n') ADVANCE(75);
+      if (lookahead == '\n') ADVANCE(71);
       if (lookahead == '$' ||
           lookahead == '(' ||
           lookahead == ')') ADVANCE(98);
+      if (lookahead != 0) ADVANCE(69);
+      END_STATE();
+    case 70:
+      ACCEPT_TOKEN(aux_sym_dollared_system_command_call_expression_token1);
+      if (('\t' <= lookahead && lookahead <= '\r') ||
+          lookahead == ' ') ADVANCE(70);
+      if (lookahead != 0 &&
+          lookahead != '$' &&
+          lookahead != '(' &&
+          lookahead != ')') ADVANCE(71);
+      END_STATE();
+    case 71:
+      ACCEPT_TOKEN(aux_sym_dollared_system_command_call_expression_token1);
+      if (lookahead != 0 &&
+          lookahead != '$' &&
+          lookahead != '(' &&
+          lookahead != ')') ADVANCE(71);
+      END_STATE();
+    case 72:
+      ACCEPT_TOKEN(anon_sym_RPAREN2);
+      END_STATE();
+    case 73:
+      ACCEPT_TOKEN(sym_system_command_call_content);
+      if (lookahead == '\n') ADVANCE(76);
+      if (lookahead == '`') ADVANCE(98);
       if (lookahead != 0) ADVANCE(73);
       END_STATE();
     case 74:
-      ACCEPT_TOKEN(aux_sym_dollared_system_command_call_expression_token1);
+      ACCEPT_TOKEN(sym_system_command_call_content);
+      if (lookahead == '#') ADVANCE(73);
       if (('\t' <= lookahead && lookahead <= '\r') ||
-          lookahead == ' ') ADVANCE(74);
+          lookahead == ' ') ADVANCE(75);
       if (lookahead != 0 &&
-          lookahead != '$' &&
-          lookahead != '(' &&
-          lookahead != ')') ADVANCE(75);
+          lookahead != '`') ADVANCE(76);
       END_STATE();
     case 75:
-      ACCEPT_TOKEN(aux_sym_dollared_system_command_call_expression_token1);
+      ACCEPT_TOKEN(sym_system_command_call_content);
+      if (('\t' <= lookahead && lookahead <= '\r') ||
+          lookahead == ' ') ADVANCE(75);
       if (lookahead != 0 &&
-          lookahead != '$' &&
-          lookahead != '(' &&
-          lookahead != ')') ADVANCE(75);
+          lookahead != '`') ADVANCE(76);
       END_STATE();
     case 76:
-      ACCEPT_TOKEN(anon_sym_RPAREN2);
+      ACCEPT_TOKEN(sym_system_command_call_content);
+      if (lookahead != 0 &&
+          lookahead != '`') ADVANCE(76);
       END_STATE();
     case 77:
       ACCEPT_TOKEN(anon_sym_AT);
@@ -2237,7 +2237,7 @@ static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
   [292] = {.lex_state = 11},
   [293] = {.lex_state = 11},
   [294] = {.lex_state = 11},
-  [295] = {.lex_state = 68},
+  [295] = {.lex_state = 74},
   [296] = {.lex_state = 11},
   [297] = {.lex_state = 11},
   [298] = {.lex_state = 17},
@@ -2263,7 +2263,7 @@ static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
   [318] = {.lex_state = 17},
   [319] = {.lex_state = 24},
   [320] = {.lex_state = 11},
-  [321] = {.lex_state = 68},
+  [321] = {.lex_state = 74},
   [322] = {.lex_state = 0},
   [323] = {.lex_state = 0},
   [324] = {.lex_state = 0},
@@ -2277,9 +2277,9 @@ static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
   [332] = {.lex_state = 0},
   [333] = {.lex_state = 0},
   [334] = {.lex_state = 11},
-  [335] = {.lex_state = 68},
+  [335] = {.lex_state = 74},
   [336] = {.lex_state = 2},
-  [337] = {.lex_state = 68},
+  [337] = {.lex_state = 74},
   [338] = {.lex_state = 2},
   [339] = {.lex_state = 1},
   [340] = {.lex_state = 11},
@@ -15622,7 +15622,7 @@ static const uint16_t ts_small_parse_table[] = {
       sym_line_comment,
   [16445] = 2,
     ACTIONS(712), 1,
-      aux_sym_quoted_system_command_call_expression_token1,
+      sym_system_command_call_content,
     ACTIONS(714), 2,
       sym__whitespace,
       sym_line_comment,
@@ -15778,7 +15778,7 @@ static const uint16_t ts_small_parse_table[] = {
       sym_line_comment,
   [16653] = 2,
     ACTIONS(762), 1,
-      aux_sym_quoted_system_command_call_expression_token1,
+      sym_system_command_call_content,
     ACTIONS(714), 2,
       sym__whitespace,
       sym_line_comment,
@@ -15862,7 +15862,7 @@ static const uint16_t ts_small_parse_table[] = {
       sym_line_comment,
   [16765] = 2,
     ACTIONS(784), 1,
-      aux_sym_quoted_system_command_call_expression_token1,
+      sym_system_command_call_content,
     ACTIONS(714), 2,
       sym__whitespace,
       sym_line_comment,
@@ -15874,7 +15874,7 @@ static const uint16_t ts_small_parse_table[] = {
       sym_line_comment,
   [16781] = 2,
     ACTIONS(788), 1,
-      aux_sym_quoted_system_command_call_expression_token1,
+      sym_system_command_call_content,
     ACTIONS(714), 2,
       sym__whitespace,
       sym_line_comment,

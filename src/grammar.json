@@ -1014,11 +1014,8 @@
           "value": "`"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[^`]*"
-          }
+          "type": "SYMBOL",
+          "name": "system_command_call_content"
         },
         {
           "type": "STRING",
@@ -1055,6 +1052,13 @@
           }
         }
       ]
+    },
+    "system_command_call_content": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[^`]*"
+      }
     },
     "_function_declaration": {
       "type": "CHOICE",

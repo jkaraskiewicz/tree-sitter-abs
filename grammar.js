@@ -195,7 +195,7 @@ module.exports = grammar({
 
     quoted_system_command_call_expression: $ => seq(
       '`',
-      token.immediate(/[^`]*/),
+      $.system_command_call_content,
       '`',
     ),
 
@@ -205,6 +205,8 @@ module.exports = grammar({
       token.immediate(/[^$()]+/), // Be careful with `[^$()]+`, ensure it doesn't try to match the closing `)`
       token.immediate(')'),
     ),
+
+    system_command_call_content: $ => token.immediate(/[^`]*/),
 
     _function_declaration: $ => choice(
       $.named_function_declaration,

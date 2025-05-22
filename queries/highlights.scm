@@ -23,7 +23,6 @@
 
 (identifier) @variable
 (annotation) @attribute
-(quoted_system_command_call_expression) @string
 (function_call_expression (identifier) @function.call)
 (member_expression (_) (identifier) @function.call)
 
@@ -86,5 +85,5 @@
 (function_call_expression
   (identifier) @function.builtin
   (#any-of? @function.builtin
-    "arg" "args" "cd" "echo" "env" "eval" "exit" "flag" "len" "map"
+    "arg" "args" "cd" "echo" "env" "eval" "exec" "exit" "flag" "len" "map"
     "pwd" "rand" "require" "sleep" "sort" "source" "stdin" "type" "unix_ms"))
